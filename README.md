@@ -8,7 +8,7 @@ IN200: projet de génération d’un terrain de jeu vidéo
 # Elive DIPOKO
 # Marie PHILIBERT
 # Pierre RATCLIFFE 
-# https://github.com/uvsq21916121/Projet-generation-de-terrain-de-jeu.git
+# https://github.com/uvsq21916121/Projet_de_generation_de_terrain_de_jeu_video.git
 
 ######################################################
 
