@@ -14,6 +14,7 @@
 # Import des modules
 
 import tkinter as tk
+import random
 
 ##################################################################################
 # constantes du programme
@@ -23,6 +24,7 @@ Hauteur = 1000
 COTE = 20
 Nombre_de_colonne = Largeur // COTE
 Nombre_de_ligne = Hauteur // COTE
+tableau = []
 
 
 
@@ -50,6 +52,10 @@ def Quadrillage():
         y += COTE
 
 
+
+
+
+
 ##################################################################################
 # Programme principal
 
@@ -57,10 +63,15 @@ def Quadrillage():
 fen_princ = tk.Tk()
 fen_princ.title("Projet de génération d’un terrain de jeu vidéo")
 Canvas = tk.Canvas(fen_princ, width= Largeur, height= Hauteur, bg='black')
-Canvas.pack()
+Canvas.grid()
 
 # Quadrillage
 Quadrillage()
+
+# création du tableau initialisé à 0
+for i in range(Nombre_de_colonne):
+    tableau.append([0] * Nombre_de_ligne)
+
 
 
 
