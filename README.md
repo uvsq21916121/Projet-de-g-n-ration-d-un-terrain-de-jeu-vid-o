@@ -2,7 +2,6 @@ IN200: projet de génération d’un terrain de jeu vidéo
 
 #######################################################
 
-
 # groupe 4 MPCI 
 # Stalin SIVASANGAR 21916121
 # Ali GOUMANE
@@ -10,7 +9,6 @@ IN200: projet de génération d’un terrain de jeu vidéo
 # Marie PHILIBERT
 # Pierre RATCLIFFE 
 # https://github.com/uvsq21916121/Projet-generation-de-terrain-de-jeu.git
-
 
 ######################################################
 
