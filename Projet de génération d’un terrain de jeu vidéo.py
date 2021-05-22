@@ -24,7 +24,6 @@ Hauteur = 1000
 COTE = 20
 Nombre_de_colonne = Largeur // COTE
 Nombre_de_ligne = Hauteur // COTE
-tableau = []
 
 
 
@@ -52,7 +51,14 @@ def Quadrillage():
         y += COTE
 
 
-
+def proba(p) :
+    for j in range(50):
+        for i in range(50):
+            x = random.random()
+            if x <= p :
+                Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
+            else :
+                Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="brown")
 
 
 
@@ -65,12 +71,9 @@ fen_princ.title("Projet de génération d’un terrain de jeu vidéo")
 Canvas = tk.Canvas(fen_princ, width= Largeur, height= Hauteur, bg='black')
 Canvas.grid()
 
-# Quadrillage
 Quadrillage()
 
-# création du tableau initialisé à 0
-for i in range(Nombre_de_colonne):
-    tableau.append([0] * Nombre_de_ligne)
+proba(p)
 
 
 
