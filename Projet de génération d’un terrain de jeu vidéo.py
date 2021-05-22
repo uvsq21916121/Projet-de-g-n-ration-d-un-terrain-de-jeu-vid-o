@@ -71,11 +71,10 @@ fen_princ.title("Projet de génération d’un terrain de jeu vidéo")
 Canvas = tk.Canvas(fen_princ, width= Largeur, height= Hauteur, bg='black')
 Canvas.grid()
 
-Quadrillage()
 
 proba(p)
 
-
+Quadrillage()
 
 
 
