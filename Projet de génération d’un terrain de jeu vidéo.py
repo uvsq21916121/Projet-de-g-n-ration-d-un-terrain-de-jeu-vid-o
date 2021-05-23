@@ -41,6 +41,8 @@ k=1
 ##################################################################################
 # Fonctions
 
+
+
 def liste ():
     "Crée une grille de 60*60"
     l = list(range(50))
@@ -51,9 +53,23 @@ def liste ():
     return l 
 
 
+def proba(p) :
+    for j in range(50):
+        for i in range(50):
+            global x 
+            x = rd.randint(0,10)
+            if x <= (p*10 ):
+                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
+                etat[i][j]=1
+            else :
+               etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="saddlebrown")
+               etat[i][j]=0
 
 
-def Quadrillage():
+def terrain_de_jeu():
+
+    proba(p)
+
     "Dessine un quadrillage formé de carrés de côté COTE"
     x = 0
     while x <= Largeur:
@@ -65,19 +81,8 @@ def Quadrillage():
         Canvas.create_line(0, y, Largeur, y, fill="white")
         y += COTE
 
-def proba(p) :
-    for j in range(50):
-        for i in range(50):
-            global x 
-            x = rd.randint(0,10)
-            if x <= (p*10 ):
-                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
-                etat[i][j]=1
-            else :
-               etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="brown")
-               etat[i][j]=0
-            
 
+            
 def xy_to_ij(x, y):
     "Renvoie les coordonnées de la case du tableau correspondant au pixel de coordonnées (x, y)"
     return x // COTE, y // COTE
@@ -126,9 +131,8 @@ l=liste() #memorise l'etat de toutes les cellules
 c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
 
 
-proba(p)
+terrain_de_jeu()
 liste()
-Quadrillage()
 
 
 
