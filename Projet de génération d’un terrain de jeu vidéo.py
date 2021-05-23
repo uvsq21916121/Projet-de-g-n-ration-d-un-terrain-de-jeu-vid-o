@@ -25,7 +25,7 @@ Hauteur = 1000
 COTE = 20
 Nombre_de_colonne = Largeur // COTE
 Nombre_de_ligne = Hauteur // COTE
-
+a = 1
  
 
 
@@ -52,9 +52,23 @@ def liste ():
     return l 
 
 
+def proba(p) :
+    for j in range(50):
+        for i in range(50):
+            global x 
+            x = rd.randint(0,10)
+            if x <= (p*10 ):
+                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
+                etat[i][j]=1
+            else :
+               etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="saddlebrown")
+               etat[i][j]=0
 
 
-def Quadrillage():
+def terrain_de_jeu():
+
+    proba(p)
+
     "Dessine un quadrillage formé de carrés de côté COTE"
     x = 0
     while x <= Largeur:
@@ -66,17 +80,7 @@ def Quadrillage():
         Canvas.create_line(0, y, Largeur, y, fill="white")
         y += COTE
 
-def proba(p) :
-    for j in range(50):
-        for i in range(50):
-            global x 
-            x = rd.randint(0,10)
-            if x <= (p*10 ):
-                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
-                etat[i][j]=1
-            else :
-               etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="brown")
-               etat[i][j]=0
+
             
 
 def xy_to_ij(x, y):
@@ -86,49 +90,52 @@ def xy_to_ij(x, y):
 
 def personnage (event):
     "crée un personnage sur une zone de terre a l'aide d'un clic"
-    global perso
-    i, j = xy_to_ij(event.x, event.y)
-    if  etat[i][j]==0:
-        #si la case est de la terre
-        x, y = i * COTE, j * COTE
-        perso = Canvas.create_rectangle((x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+    global perso, a
+    if a:
+        i, j = xy_to_ij(event.x, event.y)
+        if  etat[i][j]==0:
+            #si la case est de la terre
+            etat[i][j] = 2
+            x, y = i * COTE, j * COTE
+            perso = Canvas.create_rectangle((x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")  
+            a = 1 - a
+    else :
+        i, j = xy_to_ij(event.x, event.y)
+        if  etat[i][j]==2:
+            etat[i][j] = 0
+            Canvas.delete(perso)
+            a = 1 - a
 
 
 def deplacement(event):
+    global perso
     touche = event.keysym
     i, j = xy_to_ij(event.x, event.y)
     x, y = i*COTE ,j*COTE
     if etat[i][j]==0:
-        if touche == "h" :
+        if touche == "Up" :
             #déplacement vers le haut
             y -= COTE
-            Canvas.delete(perso)
-            Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
-        if touche == "b" :
+            Canvas.move(perso, 0, y)
+            
+        if touche == "Down" :
             #déplacement vers le bas
             y += COTE
-            Canvas.delete(perso)
             Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+            Canvas.delete(perso)
         if touche == "d" :
             x += COTE
-            Canvas.delete(perso)
             Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+            Canvas.delete(perso)
             #déplacement vers la droite
         if touche =="g" :
             #déplacement vers la gauche
             x -= COTE
-            Canvas.delete(perso)
             Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+            Canvas.delete(perso)
 
 
-    
 
-
-#def noyade() :
-    #if etat[i][j]==1:
-        #"efface et crée un nouveau personnage à l'endroit au clic de l'utilisateur "
-        #Canvas.delete(perso)
-        #personnage()
 
 
 
@@ -149,7 +156,7 @@ def cel_terre(i,j):
 def genere_terrain():
     "Redessine un nouveau terrain a partir de la liste c"
     for i in range (len(l)):
-        for j in range len(l[i]):
+        for j in range (len(l[i])):
             if l[i][j]==0 and c[i][j]==3:
                 cel_eau(i,j)
             elif (l[i][j]==1 and c[i][j]<2) or (l[i][j]==1 and c[i][j]>3):
@@ -159,18 +166,25 @@ def genere_terrain():
 
 
 
+def sauvegarder():
 
+    """Sauvegarde le tableau dans le fichier sauvegarde.txt"""
 
+    fic = open("sauvegarde.txt", "w")
 
+    for i in range(Nombre_de_colonne):
 
+        for j in range(Nombre_de_ligne):
 
+            fic.write(str(etat[i][j]) + "\n")
+
+    fic.close()
 
         
 
 
 
 
-    
         
 
 
@@ -185,14 +199,22 @@ Canvas = tk.Canvas(fen_princ, width= Largeur, height= Hauteur, bg='black')
 Canvas.bind("<Button-1>",personnage)
 Canvas.bind('<Key>',deplacement)
 Canvas.grid()
+
+
 etat=liste()#memorise toute les cellules
 l=liste() #memorise l'etat de toutes les cellules
 c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
 
 
-proba(p)
+# Création des boutons
+bouton_de_sauvegarde = tk.Button(fen_princ, text="Sauvegarder", command=sauvegarder)
+
+# Position des boutons
+bouton_de_sauvegarde.grid(column=1, row=0)
+
+
 liste()
-Quadrillage()
+terrain_de_jeu()
 
 
 
