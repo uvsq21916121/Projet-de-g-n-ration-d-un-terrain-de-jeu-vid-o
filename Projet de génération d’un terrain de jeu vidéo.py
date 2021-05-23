@@ -44,17 +44,17 @@ k=1
 
 def liste ():
     "Crée une grille de 60*60"
-    l = list(range(50))
+    l = list(range(60))
     for i in l :
-        l[i]=list(range(50))
-        for j in range (50) :
+        l[i]=list(range(60))
+        for j in range (60) :
             l[i][j]=0
     return l 
 
 
 def proba(p) :
-    for j in range(50):
-        for i in range(50):
+    for j in range(60):
+        for i in range(60):
             global x 
             x = rd.randint(0,10)
             if x <= (p*10 ):
@@ -103,7 +103,7 @@ def personnage (event):
         i, j = xy_to_ij(event.x, event.y)
         if  etat[i][j]==2:
             etat[i][j] = 0
-            Canvas.delete(perso)
+            Canvas.delete()
             a = 1 - a
 
 
@@ -162,6 +162,43 @@ def genere_terrain():
             elif (l[i][j]==1 and c[i][j]<2) or (l[i][j]==1 and c[i][j]>3):
                 cel_terre(i,j)
 
+def compte_cellule_eau():
+    "Compte le nombre de voisin autour de chaque cellule"
+    compt = 0
+    for i in range (len(l)):
+        for j in range (len(l[i])) :
+            if i ==0 and j ==0 :#coin en haut a gauche
+                compt = l[0][1] + l[1][0] + l[1][1]
+                c[0][0]=compt
+            elif i==0 and j ==59 : #coin en haut a droite
+                compt = l[0][58] + l[1][58] +l[1][59]
+                c[0][59] = compt
+            elif i==59 and j ==0 : #coin en bas a gauche
+                compt = l[58][0] + l[58][1] + l[59][1] 
+                c[59][0]= compt
+            elif i ==59 and j ==59 : #coin en bas a droite
+                compt = l[58][59] + l[58][58] +l[59][58]
+                c[59][59]=compt
+            elif 0<i<59 and j ==0 : #bordure de gauche
+                compt = l[i-1][0] + l[i-1][1] + l[i][1] + l[i+1][1] + l[i+1][0]
+                c[i][0] = compt
+            elif 0<i<59 and j == 59 : #bordure de droite
+                compt = l[i-1][59] + l[i-1][58] + l[i+1][58] + l[i+1][59]
+                c[i][59]=compt
+            elif i ==0 and 0<j<59 : #bordure du haut
+                compt = l[0][j-1] + l[1][j-1] +l[1][j] +l[1][j+1] +l[0][j+1]
+                c[0][j] = compt
+            elif i==59 and 0<j<59: #bordure du bas
+                compt = l[59][j-1] + l[58][j-1] + l[58][j] +l[58][j+1] + l [59][j+1]
+                c[0][j]=compt
+            else :
+                c[i][j] = compt
+            genere_terrain()
+
+
+
+
+
 
 
 
@@ -208,9 +245,11 @@ c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
 
 # Création des boutons
 bouton_de_sauvegarde = tk.Button(fen_princ, text="Sauvegarder", command=sauvegarder)
+bouton_generer_terrain = tk.Button(fen_princ, text="Nouveau Terrain")
 
 # Position des boutons
 bouton_de_sauvegarde.grid(column=1, row=0)
+bouton_generer_terrain.grid(column=2, row=0)
 
 
 liste()
