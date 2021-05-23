@@ -25,6 +25,7 @@ Hauteur = 1000
 COTE = 20
 Nombre_de_colonne = Largeur // COTE
 Nombre_de_ligne = Hauteur // COTE
+
  
 
 
@@ -41,8 +42,6 @@ k=1
 ##################################################################################
 # Fonctions
 
-
-
 def liste ():
     "Crée une grille de 60*60"
     l = list(range(50))
@@ -53,23 +52,9 @@ def liste ():
     return l 
 
 
-def proba(p) :
-    for j in range(50):
-        for i in range(50):
-            global x 
-            x = rd.randint(0,10)
-            if x <= (p*10 ):
-                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
-                etat[i][j]=1
-            else :
-               etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="saddlebrown")
-               etat[i][j]=0
 
 
-def terrain_de_jeu():
-
-    proba(p)
-
+def Quadrillage():
     "Dessine un quadrillage formé de carrés de côté COTE"
     x = 0
     while x <= Largeur:
@@ -81,8 +66,19 @@ def terrain_de_jeu():
         Canvas.create_line(0, y, Largeur, y, fill="white")
         y += COTE
 
-
+def proba(p) :
+    for j in range(50):
+        for i in range(50):
+            global x 
+            x = rd.randint(0,10)
+            if x <= (p*10 ):
+                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
+                etat[i][j]=1
+            else :
+               etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="brown")
+               etat[i][j]=0
             
+
 def xy_to_ij(x, y):
     "Renvoie les coordonnées de la case du tableau correspondant au pixel de coordonnées (x, y)"
     return x // COTE, y // COTE
@@ -97,24 +93,85 @@ def personnage (event):
         x, y = i * COTE, j * COTE
         perso = Canvas.create_rectangle((x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
 
+
+def deplacement(event):
+    touche = event.keysym
+    i, j = xy_to_ij(event.x, event.y)
+    x, y = i*COTE ,j*COTE
+    if etat[i][j]==0:
+        if touche == "h" :
+            #déplacement vers le haut
+            y -= COTE
+            Canvas.delete(perso)
+            Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+        if touche == "b" :
+            #déplacement vers le bas
+            y += COTE
+            Canvas.delete(perso)
+            Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+        if touche == "d" :
+            x += COTE
+            Canvas.delete(perso)
+            Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+            #déplacement vers la droite
+        if touche =="g" :
+            #déplacement vers la gauche
+            x -= COTE
+            Canvas.delete(perso)
+            Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+
+
     
 
 
-def noyade() :
-    if etat[i][j]==1:
-        "efface et crée un nouveau personnage à l'endroit au clic de l'utilisateur "
-        Canvas.delete(perso)
-        personnage()
+#def noyade() :
+    #if etat[i][j]==1:
+        #"efface et crée un nouveau personnage à l'endroit au clic de l'utilisateur "
+        #Canvas.delete(perso)
+        #personnage()
 
-     
 
-def sauvegarder():
-    """Sauvegarde le tableau dans le fichier sauvegarde.txt"""
-    fic = open("sauvegarde.txt", "w")
-    for i in range(Nombre_de_colonne):
-        for j in range(Nombre_de_ligne):
-            fic.write(str(etat[i][j]) + "\n")
-    fic.close()
+
+def cel_eau (i,j):
+    "Convertit une cellule en case d'eau"
+    l[i][j] = 1
+    Canvas.delete(etat[i][j])
+    Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
+
+def cel_terre(i,j):
+    "Convertit une cellule en case de terre"
+    l[i][j] = 0
+    Canvas.delete(etat[i][j])
+    Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="brown")
+
+
+
+def genere_terrain():
+    "Redessine un nouveau terrain a partir de la liste c"
+    for i in range (len(l)):
+        for j in range len(l[i]):
+            if l[i][j]==0 and c[i][j]==3:
+                cel_eau(i,j)
+            elif (l[i][j]==1 and c[i][j]<2) or (l[i][j]==1 and c[i][j]>3):
+                cel_terre(i,j)
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+    
+        
 
 
 
@@ -126,21 +183,16 @@ fen_princ = tk.Tk()
 fen_princ.title("Projet de génération d’un terrain de jeu vidéo")
 Canvas = tk.Canvas(fen_princ, width= Largeur, height= Hauteur, bg='black')
 Canvas.bind("<Button-1>",personnage)
+Canvas.bind('<Key>',deplacement)
 Canvas.grid()
 etat=liste()#memorise toute les cellules
 l=liste() #memorise l'etat de toutes les cellules
 c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
 
 
-# Création des boutons
-bouton_de_sauvegarde = tk.Button(fen_princ, text="Sauvegarder", command=sauvegarder)
-
-# Position des boutons
-bouton_de_sauvegarde.grid(column=1, row=0)
-
-
-terrain_de_jeu()
+proba(p)
 liste()
+Quadrillage()
 
 
 
