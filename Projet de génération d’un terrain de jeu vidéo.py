@@ -106,14 +106,15 @@ def noyade() :
         Canvas.delete(perso)
         personnage()
 
+     
 
-        
-
-
-
-
-    
-        
+def sauvegarder():
+    """Sauvegarde le tableau dans le fichier sauvegarde.txt"""
+    fic = open("sauvegarde.txt", "w")
+    for i in range(Nombre_de_colonne):
+        for j in range(Nombre_de_ligne):
+            fic.write(str(etat[i][j]) + "\n")
+    fic.close()
 
 
 
@@ -129,6 +130,13 @@ Canvas.grid()
 etat=liste()#memorise toute les cellules
 l=liste() #memorise l'etat de toutes les cellules
 c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
+
+
+# Création des boutons
+bouton_de_sauvegarde = tk.Button(fen_princ, text="Sauvegarder", command=sauvegarder)
+
+# Position des boutons
+bouton_de_sauvegarde.grid(column=1, row=0)
 
 
 terrain_de_jeu()
