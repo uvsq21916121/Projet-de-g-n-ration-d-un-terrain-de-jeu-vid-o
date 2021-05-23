@@ -85,11 +85,29 @@ def xy_to_ij(x, y):
 
 def personnage (event):
     "crée un personnage sur une zone de terre a l'aide d'un clic"
+    global perso
     i, j = xy_to_ij(event.x, event.y)
     if  etat[i][j]==0:
         #si la case est de la terre
         x, y = i * COTE, j * COTE
-        Canvas.create_rectangle((x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+        perso = Canvas.create_rectangle((x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
+
+    
+
+
+def noyade() :
+    if etat[i][j]==1:
+        "efface et crée un nouveau personnage à l'endroit au clic de l'utilisateur "
+        Canvas.delete(perso)
+        personnage()
+
+
+        
+
+
+
+
+    
         
 
 
@@ -104,7 +122,7 @@ Canvas = tk.Canvas(fen_princ, width= Largeur, height= Hauteur, bg='black')
 Canvas.bind("<Button-1>",personnage)
 Canvas.grid()
 etat=liste()#memorise toute les cellules
-l=liste() #memorise le nouvel etat des cellules
+l=liste() #memorise l'etat de toutes les cellules
 c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
 
 
