@@ -103,7 +103,7 @@ def personnage (event):
         i, j = xy_to_ij(event.x, event.y)
         if  etat[i][j]==2:
             etat[i][j] = 0
-            Canvas.delete()
+            Canvas.delete(perso)
             a = 1 - a
 
 
