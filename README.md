@@ -46,6 +46,8 @@ def deplacement(event): devrait deplacer le personnage sur les cellules de terre
 
 
 
+On a aussi essayer de faire le déplacement d'un personnage avec le clavier mais ça ne marche pas et on a mis en commentaire 
+
 
 
 Pour le projet nous avons été que 2 a le faire
