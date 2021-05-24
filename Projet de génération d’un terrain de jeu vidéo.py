@@ -52,26 +52,6 @@ k=1
 ##################################################################################
 # Fonctions
 
-<<<<<<< Updated upstream
-def liste ():
-    "Crée une grille de 50*50"
-    l = list(range(50))
-    for i in l :
-        l[i]=list(range(50))
-        for j in range (50) :
-            l[i][j]=0
-    return l 
-
-
-def proba(p) :
-    for j in range(50):
-        for i in range(50):
-            global x 
-            x = rd.randint(0,10)
-            if x <= (p*10 ):
-                etat[i][j]=Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
-                etat[i][j]=1
-=======
 
 ##Associés a la generation du terrain
 def terrain_de_jeu():
@@ -96,7 +76,6 @@ def proba(p) :
                 etat[i][j]=0
                 etat[i][j]=Canvas.create_rectangle(i*20+1, j*20+1, i*20 +20, j*20+20, fill="blue")
                 
->>>>>>> Stashed changes
             else :
                 etat[i][j]=1
                 etat[i][j]=Canvas.create_rectangle(i*20+1, j*20+1, i*20 +20, j*20+20, fill="saddlebrown")
@@ -192,115 +171,6 @@ def personnage (event):
             a = 1 - a
 
 
-<<<<<<< Updated upstream
-def deplacement(event):
-    global perso
-    touche = event.keysym
-    i, j = xy_to_ij(event.x, event.y)
-    x, y = i*COTE ,j*COTE
-    if etat[i][j]==0:
-
-        if touche == "Left": #Si la touche fleche gauche est presser 
-
-            if x>=20 and x<=980 and y>=20 and y<=980: 
-
-                if etat[i][j]==0: 
-
-                   Canvas.move(perso, 1, 0) 
-
-        elif touche == "Right": #Si la touche fleche droite est presser
-
-            if x>=20 and x<=980 and y>=20 and y<=980: 
-
-                if etat[i][j]==0: 
-
-                   Canvas.move(perso, -1, 0) 
-        
-        elif touche == "Up": #Si la touche fleche haut est presser
-
-            if x>=20 and x<=980 and y>=20 and y<=980:
-
-                 if etat[i][j]==0: 
-
-                    Canvas.move(perso, 0, +1) 
-
-        elif touche == "Down": #Si la touche fleche bas est presser
-
-            if x>=20 and x<=980 and y>=20 and y<=980: 
-
-                if etat[i][j]==0: 
-                
-                    Canvas.move(perso, 0 , -1) 
-
-
-
-
-
-
-
-def cel_eau (i,j):
-    "Convertit une cellule en case d'eau"
-    l[i][j] = 1
-    Canvas.delete(etat[i][j])
-    Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="blue")
-
-def cel_terre(i,j):
-    "Convertit une cellule en case de terre"
-    l[i][j] = 0
-    Canvas.delete(etat[i][j])
-    Canvas.create_rectangle(i*20, j*20, i*20 +20, j*20+20, fill="brown")
-
-
-
-def genere_terrain():
-    "Redessine un nouveau terrain a partir de la liste c"
-    for i in range (len(l)):
-        for j in range (len(l[i])):
-            if l[i][j]==0 and c[i][j]==3:
-                cel_eau(i,j)
-            elif (l[i][j]==1 and c[i][j]<2) or (l[i][j]==1 and c[i][j]>3):
-                cel_terre(i,j)
-
-def compte_voisinage():
-    "Compte le nombre de voisin autour de chaque cellule"
-    compt = 0
-    for i in range (len(l)):
-        for j in range (len(l[i])) :
-            if i ==0 and j ==0 :#coin en haut a gauche
-                compt = l[0][1] + l[1][0] + l[1][1]
-                c[0][0]=compt
-            elif i==0 and j ==59 : #coin en haut a droite
-                compt = l[0][58] + l[1][58] +l[1][59]
-                c[0][59] = compt
-            elif i==59 and j ==0 : #coin en bas a gauche
-                compt = l[58][0] + l[58][1] + l[59][1] 
-                c[59][0]= compt
-            elif i ==59 and j ==59 : #coin en bas a droite
-                compt = l[58][59] + l[58][58] +l[59][58]
-                c[59][59]=compt
-            elif 0<i<59 and j ==0 : #bordure de gauche
-                compt = l[i-1][0] + l[i-1][1] + l[i][1] + l[i+1][1] + l[i+1][0]
-                c[i][0] = compt
-            elif 0<i<59 and j == 59 : #bordure de droite
-                compt = l[i-1][59] + l[i-1][58] + l[i+1][58] + l[i+1][59]
-                c[i][59]=compt
-            elif i ==0 and 0<j<59 : #bordure du haut
-                compt = l[0][j-1] + l[1][j-1] +l[1][j] +l[1][j+1] +l[0][j+1]
-                c[0][j] = compt
-            elif i==59 and 0<j<59: #bordure du bas
-                compt = l[59][j-1] + l[58][j-1] + l[58][j] +l[58][j+1] + l [59][j+1]
-                c[0][j]=compt
-            else :
-                compt = l[i-1][j-1] + l[i-1][j] +l[i-1][j+1] +l[i][j+1] + l[i+1][j+1] + l[i+1][j] +l[i+1][j-1] + l[i][j-1]
-                c[i][j] = compt
-        genere_terrain()
-
-
-def nouveau_terrain():
-    global k 
-    if k ==1 :
-        compte_voisinage()
-=======
 #def deplacement(event):
     #global perso
     #touche = event.keysym
@@ -327,7 +197,6 @@ def nouveau_terrain():
             #x -= COTE
             #Canvas.coords(perso,(x, y), (x+COTE, y+COTE), fill="cyan", outline="green2")
             #Canvas.delete(perso)
->>>>>>> Stashed changes
 
 
 
@@ -355,6 +224,7 @@ def sauvegarder():
 ##################################################################################
 # Création du menu 
 def creation_menu():
+    "Crée un menu permettant de changer les parametres du terrain"
     global valT, valn, valk, valp, valn,cel 
     label1 = tk.Label(Choisir ,text = "p = ")
     valp = tk.Spinbox(Choisir ,from_= 0.1 , to = 1.0 ,increment=0.1, wrap=True  , command = choix_p)
@@ -431,20 +301,10 @@ bouton_generer_terrain.grid(column=2, row=0)
 
 
 
-<<<<<<< Updated upstream
-#cel_eau (i,j)
-#cel_terre(i,j)
-#compte_voisinage()
-liste()
-terrain_de_jeu()
-
-
-=======
 
 #Autres Fonctions
 creation_menu()
 terrain_de_jeu()
 proba(p)
 
->>>>>>> Stashed changes
 fen_princ.mainloop()
