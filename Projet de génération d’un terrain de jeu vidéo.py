@@ -113,25 +113,38 @@ def deplacement(event):
     i, j = xy_to_ij(event.x, event.y)
     x, y = i*COTE ,j*COTE
     if etat[i][j]==0:
-        if touche == "Left": #Si la touche fleche gauche est presser
-            if x>=20 and x<=980 and y>=20 and y<=980: #Si le personnage n'est pas sur la bordure gauche
-                if etat[i][j]==0: #Si la case a gauche est de la terre
-                   Canvas.move(perso, 1, 0) #Bouge le personnage d'une case vers la gauche
+
+        if touche == "Left": #Si la touche fleche gauche est presser 
+
+            if x>=20 and x<=980 and y>=20 and y<=980: 
+
+                if etat[i][j]==0: 
+
+                   Canvas.move(perso, 1, 0) 
 
         elif touche == "Right": #Si la touche fleche droite est presser
-            if x>=20 and x<=980 and y>=20 and y<=980: #Si le personnage n'est pas sur la bordure droite
-                if etat[i][j]==0: #si la case a droite est de la terre
-                   Canvas.move(perso, -1, 0) #Bouge le personnage d'une case vers la droite
+
+            if x>=20 and x<=980 and y>=20 and y<=980: 
+
+                if etat[i][j]==0: 
+
+                   Canvas.move(perso, -1, 0) 
         
         elif touche == "Up": #Si la touche fleche haut est presser
-            if x>=20 and x<=980 and y>=20 and y<=980: #Si le personnage n'est pas sur la bordure haute
-                 if etat[i][j]==0: #Si la case au dessus est de la terre
-                    Canvas.move(perso, 0, +1) #Bouge le personnage d'une case vers le haut
+
+            if x>=20 and x<=980 and y>=20 and y<=980:
+
+                 if etat[i][j]==0: 
+
+                    Canvas.move(perso, 0, +1) 
 
         elif touche == "Down": #Si la touche fleche bas est presser
-            if x>=20 and x<=980 and y>=20 and y<=980: #Si le personnage n'est pas sur la bordure basse
-                if etat[i][j]==0: #Si la case en dessous est de la terre
-                    Canvas.move(perso, 0 , -1) #Bouge le personnage d'une case vers le bas
+
+            if x>=20 and x<=980 and y>=20 and y<=980: 
+
+                if etat[i][j]==0: 
+                
+                    Canvas.move(perso, 0 , -1) 
 
 
 
