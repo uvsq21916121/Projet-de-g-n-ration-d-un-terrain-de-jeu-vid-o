@@ -307,6 +307,6 @@ bouton_generer_terrain.grid(column=2, row=0)
 creation_menu()
 terrain_de_jeu()
 proba(p) 
-personnage()
+#personnage()
 
 fen_princ.mainloop()
