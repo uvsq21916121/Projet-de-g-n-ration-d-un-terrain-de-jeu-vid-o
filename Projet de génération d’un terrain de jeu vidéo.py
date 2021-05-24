@@ -248,7 +248,7 @@ def creation_menu():
     cel.grid(row = 4 , column = 1 , columspan = 2 )
 
 
-#Fonctions associés aux menus
+#Fonctions associés a menus
 def choix_p ():
     global p 
     p = float(valp.get())
