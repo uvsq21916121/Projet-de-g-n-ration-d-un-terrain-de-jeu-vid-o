@@ -66,6 +66,7 @@ def terrain_de_jeu():
 
 
 
+
 def proba(p) :
     "Attribue une valeur a chaque type de cellule et les affiche dans la grille"
     for j in range(cellule):
@@ -167,7 +168,7 @@ def personnage (event):
         i, j = xy_to_ij(event.x, event.y)
         if  etat[i][j]==0:
             etat[i][j] = 0
-            Canvas.delete()
+            Canvas.delete(perso)
             a = 1 - a
 
 
@@ -245,7 +246,7 @@ def creation_menu():
     label5 = tk.Label(Choisir, text= "Nombre de cellules = ")
     cel = tk.Spinbox( Choisir,from_ = 10, to = 100, increment= 10, command = choix_cel)
     label5.grid(row=4, column=0)
-    cel.grid(row = 4 , column = 1 , columspan = 2 )
+    cel.grid(row = 4 , column = 1 , columnspan = 2 )
 
 
 #Fonctions associés a menus
@@ -305,6 +306,7 @@ bouton_generer_terrain.grid(column=2, row=0)
 #Autres Fonctions
 creation_menu()
 terrain_de_jeu()
-proba(p)
+proba(p) 
+
 
 fen_princ.mainloop()
