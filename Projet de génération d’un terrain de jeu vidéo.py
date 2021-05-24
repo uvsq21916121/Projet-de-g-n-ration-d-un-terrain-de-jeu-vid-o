@@ -158,7 +158,7 @@ def personnage (event):
     global perso, a
     if a:
         i, j = xy_to_ij(event.x, event.y)
-        if  etat[i][j]==0:
+        if  etat[i][j]==1:
             #si la case est de la terre
             etat[i][j] = 2
             x, y = i * COTE, j * COTE
@@ -166,7 +166,7 @@ def personnage (event):
             a = 1 - a
     else :
         i, j = xy_to_ij(event.x, event.y)
-        if  etat[i][j]==0:
+        if  etat[i][j]==2:
             etat[i][j] = 0
             Canvas.delete(perso)
             a = 1 - a
@@ -307,6 +307,6 @@ bouton_generer_terrain.grid(column=2, row=0)
 creation_menu()
 terrain_de_jeu()
 proba(p) 
-
+personnage()
 
 fen_princ.mainloop()
