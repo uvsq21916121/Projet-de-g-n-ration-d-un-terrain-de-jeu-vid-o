@@ -162,7 +162,7 @@ def genere_terrain():
             elif (l[i][j]==1 and c[i][j]<2) or (l[i][j]==1 and c[i][j]>3):
                 cel_terre(i,j)
 
-def compte_cellule_eau():
+def compte_voisinage():
     "Compte le nombre de voisin autour de chaque cellule"
     compt = 0
     for i in range (len(l)):
@@ -192,8 +192,15 @@ def compte_cellule_eau():
                 compt = l[59][j-1] + l[58][j-1] + l[58][j] +l[58][j+1] + l [59][j+1]
                 c[0][j]=compt
             else :
+                compt = l[i-1][j-1] + l[i-1][j] +l[i-1][j+1] +l[i][j+1] + l[i+1][j+1] + l[i+1][j] +l[i+1][j-1] + l[i][j-1]
                 c[i][j] = compt
-            genere_terrain()
+        genere_terrain()
+
+
+def nouveau_terrain():
+    global k 
+    if k ==1 :
+        compte_voisinage()
 
 
 
@@ -245,13 +252,18 @@ c=liste() #memorise le nombre de case d'eau autour d'une case d'eau
 
 # Création des boutons
 bouton_de_sauvegarde = tk.Button(fen_princ, text="Sauvegarder", command=sauvegarder)
-bouton_generer_terrain = tk.Button(fen_princ, text="Nouveau Terrain")
+bouton_generer_terrain = tk.Button(fen_princ, text="Nouveau Terrain",command=nouveau_terrain)
 
 # Position des boutons
 bouton_de_sauvegarde.grid(column=1, row=0)
 bouton_generer_terrain.grid(column=2, row=0)
 
 
+
+
+cel_eau (i,j)
+cel_terre(i,j)
+compte_voisinage()
 liste()
 terrain_de_jeu()
 
